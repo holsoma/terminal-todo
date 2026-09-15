@@ -17,11 +17,15 @@ dependencies {
 tasks.named('test') { useJUnitPlatform() }
 
 teavm {
-    all {} 
-    mainClass = 'todo.Main'
-    targetDirectory = file("${layout.buildDirectory.get()}/site")
-    targetFileName = 'teavm.js'
-    debugInformation = false
+    all {
+        mainClass = 'todo.Main'
+        debugInformation = false
+    }
+
+    js {
+        targetDirectory = file("${layout.buildDirectory.get()}/site")
+        targetFileName = 'teavm.js'
+    }
 }
 
 tasks.register('copyWeb', Copy) {
