@@ -17,7 +17,7 @@
   function csv(tasks) { return ['id,description,completed', ...tasks.map(t => [t.id,t.description,t.completed].map(csvEscape).join(','))].join('\n')+'\n'; }
   function save(tasks) { localStorage.setItem(key, JSON.stringify(tasks)); }
   function load() { try { const saved=localStorage.getItem(key); if (saved) return JSON.parse(saved); } catch (_) {} return null; }
-  function send(command) { print('> '+command); const response=window.teavm?.execute ? window.teavm.execute(command) : 'TeaVM is not loaded. Build the project first.'; print(response); if (response !== '__CLEAR__') saveCurrent(); }
+  function send(command) { print('> '+command); const response=typeof window.execute === 'function' ? window.execute(command) : 'TeaVM is not loaded. Build the project first.'; print(response); if (response !== '__CLEAR__') saveCurrent(); }
   function saveCurrent() { /* Java state is the source of truth; browser state is updated by CSV bridge below. */ }
   async function initialise() { const saved=load(); if (saved) { print('Restored saved tasks.'); return; } try { const text=await fetch('data/tasks.csv').then(r=>r.text()); const tasks=csvParse(text); save(tasks); print('Loaded default tasks from data/tasks.csv.'); } catch(e) { print('Could not load default CSV: '+e.message); } }
   form.addEventListener('submit', e => { e.preventDefault(); const value=input.value.trim(); if(value){send(value); input.value='';} input.focus(); });
