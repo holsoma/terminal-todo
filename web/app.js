@@ -5,7 +5,7 @@
   const form = document.querySelector('#form');
   const file = document.querySelector('#file');
 
-  function print(text) { if (text === '__CLEAR__') { terminal.innerHTML = ''; return; } const line = document.createElement('div'); line.textContent = text; terminal.append(line); terminal.scrollTop = terminal.scrollHeight; }
+  function print(text) { if (text === '__CLEAR__') { terminal.innerHTML = ''; return; } const line = document.createElement('div'); line.className = 'output'; line.textContent = text; terminal.append(line); terminal.scrollTop = terminal.scrollHeight; }
   function csvParse(text) {
     const rows = []; let row = [], field = '', quoted = false;
     for (let i=0;i<text.length;i++) { const c=text[i]; if (c === '"') { if (quoted && text[i+1] === '"') { field += '"'; i++; } else quoted = !quoted; } else if (c === ',' && !quoted) { row.push(field); field=''; } else if ((c==='\n' || c==='\r') && !quoted) { if (c==='\r' && text[i+1]==='\n') i++; row.push(field); if (row.some(x=>x.trim())) rows.push(row); row=[]; field=''; } else field += c; }
