@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.teavm' version '0.10.2'
+    id 'org.teavm' version '0.15.0'
 }
 
 group = 'todo'
@@ -11,6 +11,7 @@ java { toolchain { languageVersion = JavaLanguageVersion.of(17) } }
 repositories { mavenCentral() }
 
 dependencies {
+    implementation teavm.libs.jso
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
 }
 
@@ -23,7 +24,8 @@ teavm {
     }
 
     js {
-        targetDirectory = file("${layout.buildDirectory.get()}/site")
+        outputDir = layout.buildDirectory.dir('site')
+        relativePathInOutputDir = ''
         targetFileName = 'teavm.js'
     }
 }
@@ -33,5 +35,5 @@ tasks.register('copyWeb', Copy) {
     into layout.buildDirectory.dir('site')
 }
 
-tasks.named('teavm') { dependsOn 'copyWeb' }
+tasks.named('generateJavaScript') { dependsOn 'copyWeb' }
 

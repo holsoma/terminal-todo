@@ -42,10 +42,10 @@ Requirements: JDK 17, Gradle 8 or the included Gradle wrapper, and a modern brow
 
 ```bash
 gradle test
-gradle teavm
+gradle generateJavaScript
 ```
 
-On Windows use `gradlew.bat test` and `gradlew.bat teavm` when the wrapper is present. The static site is generated in `build/site`. Serve it through a local HTTP server because `fetch` may be blocked for `file://` pages:
+On Windows use `gradlew.bat test` and `gradlew.bat generateJavaScript` when the wrapper is present. The static site is generated in `build/site`. Serve it through a local HTTP server because `fetch` may be blocked for `file://` pages:
 
 ```bash
 cd build/site
@@ -58,7 +58,7 @@ Open `http://localhost:8000/`.
 
 The workflow in `.github/workflows/deploy.yml` runs on every push to `main`, sets up Java 17, runs the TeaVM build, uploads `build/site`, and deploys it with GitHub Pages. In repository Settings > Pages, select GitHub Actions as the source if GitHub asks for a source. The site URL is `https://USERNAME.github.io/terminal-todo/`.
 
-For a manual deployment, run `gradle teavm` and publish the contents of `build/site` with a Pages branch or Pages-compatible deployment tool.
+For a manual deployment, run `gradle generateJavaScript` and publish the contents of `build/site` with a Pages branch or Pages-compatible deployment tool.
 
 ## Project structure
 
