@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'org.teavm' version '0.10.2'
+}
+
+group = 'todo'
+version = '1.0.0'
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(17) } }
+
+repositories { mavenCentral() }
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+
+tasks.named('test') { useJUnitPlatform() }
+
+teavm {
+    all {} 
+    mainClass = 'todo.Main'
+    targetDirectory = file("${layout.buildDirectory.get()}/site")
+    targetFileName = 'teavm.js'
+    debugInformation = false
+}
+
+tasks.register('copyWeb', Copy) {
+    from 'web'
+    into layout.buildDirectory.dir('site')
+}
+
+tasks.named('teavm') { dependsOn 'copyWeb' }
+
